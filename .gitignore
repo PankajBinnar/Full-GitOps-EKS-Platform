@@ -1,0 +1,36 @@
+# Binaries & Tooling
+.bin/
+bin/
+*.exe
+
+# Terraform
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+*.tfvars
+*.tfvars.json
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
+
+# Helm & Kubernetes
+*.tgz
+*.lock
+.helm/
+
+# IDE & OS
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Docker / Local run
+.env
+.env.local
