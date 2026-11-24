@@ -1,0 +1,137 @@
+# Copyright 2024 Google LLC / Customized for Amazon EKS
+# Environment: Production
+# Configured for high availability, performance, and scaling
+
+images:
+  repository: us-central1-docker.pkg.dev/online-boutique-ci/microservices-demo
+  tag: ""
+
+# Disable Classic Load Balancer in favor of AWS ALB Ingress
+frontend:
+  externalService: false
+  platform: aws
+  resources:
+    requests:
+      cpu: 200m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 256Mi
+
+# AWS Load Balancer Controller Ingress configuration
+ingress:
+  enabled: true
+  ingressClassName: alb
+  scheme: internet-facing
+  targetType: ip
+  certificateArn: ""
+  healthcheckPath: /_healthz
+  annotations:
+    alb.ingress.kubernetes.io/target-group-attributes: stickiness.enabled=true,stickiness.lb_cookie.duration_seconds=60
+  hosts: []
+
+# Load generator enabled and toggleable in prod
+loadGenerator:
+  create: true
+  enabled: true
+  resources:
+    requests:
+      cpu: 200m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
+# Production microservice resources
+adService:
+  resources:
+    requests:
+      cpu: 200m
+      memory: 256Mi
+    limits:
+      cpu: 400m
+      memory: 512Mi
+
+cartService:
+  resources:
+    requests:
+      cpu: 200m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
+checkoutService:
+  resources:
+    requests:
+      cpu: 200m
+      memory: 128Mi
+    limits:
+      cpu: 400m
+      memory: 256Mi
+
+currencyService:
+  resources:
+    requests:
+      cpu: 150m
+      memory: 128Mi
+    limits:
+      cpu: 300m
+      memory: 256Mi
+
+emailService:
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 200m
+      memory: 256Mi
+
+paymentService:
+  resources:
+    requests:
+      cpu: 150m
+      memory: 128Mi
+    limits:
+      cpu: 300m
+      memory: 256Mi
+
+productCatalogService:
+  resources:
+    requests:
+      cpu: 200m
+      memory: 128Mi
+    limits:
+      cpu: 400m
+      memory: 256Mi
+
+recommendationService:
+  resources:
+    requests:
+      cpu: 200m
+      memory: 256Mi
+    limits:
+      cpu: 400m
+      memory: 512Mi
+
+shippingService:
+  resources:
+    requests:
+      cpu: 150m
+      memory: 128Mi
+    limits:
+      cpu: 300m
+      memory: 256Mi
+
+networkPolicies:
+  create: false
+
+sidecars:
+  create: false
+
+authorizationPolicies:
+  create: false
+
+opentelemetryCollector:
+  create: false
